@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>CrazyCat</title>
+    <script src="libraries/vue/vue.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+    <div id="app">
+        <p>{{ message }}</p>
+    </div>
+
+    <div class="mainWindow">
+        hello
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue.js!'
+            }
+        })
+    </script>
+</body>
+
+</html>
