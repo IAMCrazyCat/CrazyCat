@@ -82,16 +82,18 @@ DAT.Globe = function (container, opts) {
 
   var mouse = { x: 0, y: 0 }, mouseOnDown = { x: 0, y: 0 };
   var rotation = { x: 0, y: 0 },
-    target = { x: Math.PI * 3 / 2, y: Math.PI / 6.0 },
+    target = { x: Math.PI * 1.014, y: Math.PI / 6.0 * 0.077 }, // Earth rotation target
     firstRotationTarget = { x: Math.PI * 3, y: Math.PI * 3 },
     targetOnDown = { x: 0, y: 0 };
 
   var distance = 100000, distanceTarget = 100000;
   var padding = 40;
   var PI_HALF = Math.PI / 2;
+  var rotationSpeed = 0.5;
+  var zoomSpeed = 5;
+  var spin = false;
   //var light = new THREE.PointLight( 0xff0000, 1, 100 ); // soft white light 
   function init() {
-
 
     container.style.color = '#fff';
     container.style.font = '13px/20px Arial, sans-serif';
@@ -102,18 +104,18 @@ DAT.Globe = function (container, opts) {
 
     camera = new THREE.PerspectiveCamera(30, w / h, 1, 10000);
 
-    camera.position.z = distance;
+    //camera.position.z = distance + 10000;
 
     scene = new THREE.Scene();
     scene.background = new THREE.CubeTextureLoader()
-
+      .setPath('./bg/space2/')
       .load([
-        './bg/night/px.jpg',
-        './bg/night/nx.jpg',
-        './bg/night/py.jpg',
-        './bg/night/ny.jpg',
-        './bg/night/pz.jpg',
-        './bg/night/nz.jpg'
+        'px.jpg',
+        'nx.jpg',
+        'py.jpg',
+        'ny.jpg',
+        'pz.jpg',
+        'nz.jpg'
       ]);
 
 
@@ -134,8 +136,8 @@ DAT.Globe = function (container, opts) {
 
     mesh = new THREE.Mesh(geometry, material);
     mesh.rotation.y = Math.PI;
-    scene.add(mesh);
 
+    scene.add(mesh);
 
 
     //scene.add(light);
@@ -363,7 +365,7 @@ DAT.Globe = function (container, opts) {
 
   function zoom(delta) {
     distanceTarget -= delta;
-    distanceTarget = distanceTarget > 1000 ? 1000 : distanceTarget;
+    distanceTarget = distanceTarget > 1500 ? 1500 : distanceTarget;
     distanceTarget = distanceTarget < 350 ? 350 : distanceTarget;
   }
 
@@ -373,25 +375,47 @@ DAT.Globe = function (container, opts) {
   }
 
   function render() {
-    zoom(curZoomSpeed);
+    if (spin) {
+      rotation.x += rotationSpeed * 0.01
 
-    rotation.x += (target.x - rotation.x) * 0.1;
-    rotation.y += (target.y - rotation.y) * 0.1;
-    //rotation.x +=  (firstRotationTarget.x - rotation.x) * 0.001;
-    //rotation.y +=  0.1;
-    //x:121 y:203 z:312
-    distance += (distanceTarget - distance) * 0.3;
+    } else {
 
+      zoom(curZoomSpeed);
+
+      rotation.x += (target.x - rotation.x) * rotationSpeed * 0.01;
+      rotation.y += (target.y - rotation.y) * rotationSpeed * 0.01;
+      //console.log("rotation.x: " + String(rotation.x) + " rotation.y: " + String(rotation.y));
+      //rotation.x +=  (firstRotationTarget.x - rotation.x) * 0.0001;
+      //rotation.y +=  0.1;
+      //x:121 y:203 z:312
+      // originRotx 1.88 roty 0.52
+      // rotx 3.19 roty 0.04
+      distance += (distanceTarget - distance) * zoomSpeed * 0.03;
+      console.log(distance);
+
+    }
     camera.position.x = distance * Math.sin(rotation.x) * Math.cos(rotation.y);
     camera.position.y = distance * Math.sin(rotation.y);
     camera.position.z = distance * Math.cos(rotation.x) * Math.cos(rotation.y);
-    console.log("%cx: " + String(camera.position.x) + " y: " + String(camera.position.y) + " z: " + String(camera.position.z), 'color:#32CD32;');
-
+    //console.log("%cx: " + String(camera.position.x) + " y: " + String(camera.position.y) + " z: " + String(camera.position.z), 'color:#32CD32;');
     camera.lookAt(mesh.position);
-
     renderer.render(scene, camera);
   }
 
+
+  function updateEarthI(rs, zs) {
+
+    //this.rotationSpeed = rotationSpeed;
+    //this.zoomSpeed = zoomSpeed;
+ 
+    zoomSpeed = zs;
+    rotationSpeed = rs;
+    target.x = 6.6;
+    target.y = 0.53;
+
+    distanceTarget = 1000;
+  }
+  this.updateEarthI = updateEarthI;
   init();
   this.animate = animate;
 

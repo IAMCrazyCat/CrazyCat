@@ -5,26 +5,54 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css" type="text/css" />
 
-    <style type="text/css">
+    <style>
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 5s
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active, 2.1.8 版本以下 */ {
+        opacity: 1
+    }
     </style>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+
   </head>
   <body>
+
+  <script>
+
+  </script> 
 
   <div id="container"></div>
 
   <div id="info">
-    <strong><a href="http://www.chromeexperiments.com/globe">WebGL Globe</a></strong> <span class="bull">&bull;</span> Created by the Google Data Arts Team <span class="bull">&bull;</span> Data acquired from <a href="http://sedac.ciesin.columbia.edu/gpw/">SEDAC</a>
+    
   </div>
 
-  <div id="currentInfo">
-    <span id="year1990" class="year">1990</span>
-    <span id="year1995" class="year">1995</span>
-    <span id="year2000" class="year">2000</span>
+  <div id="centerTitle">
+    Hello.
   </div>
 
   <div id="title">
-    World Population
+ 
   </div>
+
+  <div id="year">
+
+  <div id="currentInfo">
+    <span id="year1990" class="year">I</span>
+    <span id="year1995" class="year">II</span>
+    <span id="year2000" class="year">III</span>
+    <span id="year2000" class="year">IV</span>
+    <span id="year2000" class="year">V</span>
+  </div>
+
+  </div>
+
+
+ 
+
+  
 
   
 
@@ -32,8 +60,11 @@
   <script type="text/javascript" src="libraries/three/three.min.js"></script>
   <script type="text/javascript" src="libraries/others/Tween.js"></script>
   <script type="text/javascript" src="libraries/globe/globe.js"></script>
+  
 
-
+  <script type="text/javascript">
+    
+  </script>
   
   <script type="text/javascript">
 
@@ -93,7 +124,6 @@
     }
 
   </script>
-
   </body>
 
 </html>

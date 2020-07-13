@@ -4,41 +4,254 @@
 <head>
     <meta charset="utf-8">
     <title>CrazyCat</title>
+
     <script src="libraries/vue/vue.js"></script>
     <link rel="stylesheet" href="style.css" type="text/css" />
 
     <script src="libraries/three/three.js"></script>
     <script src="libraries/three/three.min.js"></script>
     <script type="module" src="libraries/three/three.module.js"></script>
-
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script src="libraries/three/LoadingManager.js"></script>
     <script type="module" src="libraries/three/MTLLoader.js"></script>
     <script type="module" src="libraries/three/OBJLoader.js"></script>
     <script src="libraries/three/dat.gui.js"></script>
     <script src="libraries/three/dat.gui.min.js"></script>
-    
+
     <script type="module" src="libraries/three/OrbitControls.js"></script>
     <script type="module" src="libraries/three/TransformControls.js"></script>
 
     <script type="module" src="transformtest.js"></script>
+
+    <style>
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity 5s
+        }
+
+        .fade-enter,
+        .fade-leave-to {
+            opacity: 0
+        }
+    </style>
+
 </head>
 
 <body>
-    <div id="app">
-        <p>{{ message }}</p>
+
+
+
+    <div id="container" style="display: none;"></div>
+
+    <div id="info">
+
     </div>
 
-    <div class="mainWindow">
-        hello
+    <div id="centerTitle">
+        <button ID="showCenterTitle" @click="change" style="display: none;"></button>
+        <transition name="fade" v-on:before-enter="beforeEnter" v-on:after-enter="afterEnter">
+            <p id="centerTitleText" v-show="show">Hello.</p>
+        </transition>
+
+
+
     </div>
 
-    <script>
-        new Vue({
-            el: '#app',
+    <div id="guider">
+
+        <p id="guiderText" style="display:none"></p>
+    </div>
+
+
+
+    <div id="year">
+
+        <div id="currentInfo">
+            <span id="I" class="year">I</span>
+            <span id="II" class="year">II</span>
+            <span id="III" class="year">III</span>
+            <span id="IV" class="year">IV</span>
+            <span id="V" class="year">V</span>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))//Define a delay function
+        var guiderTextArray = ["Earth, the bueatiful place ", "First, I will bring you to my hometown", ];
+        
+
+        var vm = new Vue({
+            el: '#centerTitle',
             data: {
-                message: 'Hello Vue.js!'
+                show: false,
+                text: "text"
+            },
+            methods: {
+                change() {
+                    this.show = !this.show
+                },
+                beforeEnter() {
+                    
+                    
+                   
+                },
+                afterEnter() {
+                    this.show = false;
+                    addEarth();
+                    startStories();
+                   
+
+                }
+
             }
-        })
+        });
+
+        $("#showCenterTitle").click();
+
+        async function showGuiderText(counter, time) { // counter: index of text, time: times that cursor flahes after text printed
+            $("#container").fadeIn(1000);
+            $("#guiderText").show();
+            var str = "";
+            
+            var text = guiderTextArray[counter];
+            var letters = text.split("");
+            var i = 0;
+
+
+
+            while (i < letters.length) {
+                str += letters[i];
+                if(letters[i] == ","){
+                    await sleep(500);
+                    document.getElementById("guiderText").innerHTML = str;
+                    await sleep(500);
+                    document.getElementById("guiderText").innerHTML = str + "▮";
+                }
+                document.getElementById("guiderText").innerHTML = str + "▮";
+                await sleep(100);
+                i += 1
+            }
+            
+            for(i = 0; i < time; i++) { // Corsor flash 
+                await sleep(500);
+                document.getElementById("guiderText").innerHTML = str;
+                await sleep(500);
+                document.getElementById("guiderText").innerHTML = str + "▮";
+            }
+
+        }
+
+    </script>
+
+
+
+
+
+
+    <script type="text/javascript" src="libraries/others/Detector.js"></script>
+    <script type="text/javascript" src="libraries/three/three.min.js"></script>
+    <script type="text/javascript" src="libraries/others/Tween.js"></script>
+    <script type="text/javascript" src="libraries/globe/globe.js"></script>
+
+
+
+
+    <script type="text/javascript">
+    var globe;
+        function addEarth() {
+            if (!Detector.webgl) {
+                Detector.addGetWebGLMessage();
+            } else {
+
+                var years = ['I', 'II', 'III', 'IV', 'V'];
+                var container = document.getElementById('container');
+                globe = new DAT.Globe(container);
+
+                console.log(globe);
+                var i, tweens = [];
+
+                var settime = function (globe, t) {
+                    return function () {
+                        new TWEEN.Tween(globe).to({ time: t / years.length }, 500).easing(TWEEN.Easing.Cubic.EaseOut).start();
+                        var y = document.getElementById('' + years[t]);
+                        if (y.getAttribute('class') === 'year active') {
+                            return;
+                        }
+                        var yy = document.getElementsByClassName('year');
+                        for (i = 0; i < yy.length; i++) {
+                            yy[i].setAttribute('class', 'year');
+                        }
+                        y.setAttribute('class', 'year active');
+                    };
+                };
+
+                for (var i = 0; i < years.length; i++) {
+                    var y = document.getElementById('' + years[i]);
+                    y.addEventListener('mouseover', settime(globe, i), false);
+                }
+
+                var xhr;
+                TWEEN.start();
+
+
+                xhr = new XMLHttpRequest();
+                xhr.open('GET', 'population909500.json', true);
+                xhr.onreadystatechange = function (e) {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            var data = JSON.parse(xhr.responseText);
+                            window.data = data;
+                            for (i = 0; i < data.length; i++) {
+                                globe.addData(data[i][1], { format: 'magnitude', name: data[i][0], animated: true });
+                            }
+                            globe.createPoints();
+                            settime(globe, 0)();
+                            globe.animate();
+                            document.body.style.backgroundImage = 'none'; // remove loading
+                        }
+                    }
+                };
+                xhr.send(null);
+            }
+
+        }
+
+        async function startStories(){
+            
+            await updateEarthI();
+            await updateEarthII();
+            await updateEarthIII();
+            await updateEarthIV();
+            await updateEarthV();
+        }
+
+        async function updateEarthI(){
+
+            await showGuiderText(0, 3);
+            await showGuiderText(1, 1);
+            await globe.updateEarthI(0.7, 0.2);
+
+        }
+
+        async function updateEarthII(){
+
+        }
+
+        async function updateEarthIII(){
+            
+        }
+
+        async function updateEarthIV(){
+            
+        }
+
+        async function updateEarthV(){
+            
+        }
+
+
+
     </script>
 </body>
 

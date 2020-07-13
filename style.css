@@ -15,7 +15,7 @@ html {
   #info {
 
     font-size: 11px;
-    position: absolute;
+    position: relative;
     bottom: 5px;
     background-color: rgba(0,0,0,0.8);
     border-radius: 3px;
@@ -25,15 +25,22 @@ html {
   }
 
   #currentInfo {
-    width: 270px;
     position: absolute;
-    left: 20px;
-    top: 63px;
-
+    margin-left: -225px;
+    left: 50%;
+    width: 450px;
+    bottom: 1%;
     background-color: rgba(0,0,0,0.2);
-
-    border-top: 1px solid rgba(255,255,255,0.4);
+    border-top: 0.5px solid rgba(255,255,255,0.4);
     padding: 10px;
+
+  }
+
+  #parent
+  {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
   }
 
   a {
@@ -49,15 +56,41 @@ html {
     color: #555;
   }
 
+  #centerTitle
+  {
+    position: absolute;
+    top:50%;
+    left:50%;
+    font: 100px avenir;
+    transform: translate(-50%,-50%);
+  }
+
   #title {
     position: absolute;
-    top: 20px;
+    text-align: center;
+    left: 50%;
+    bottom: 10%;
+    margin-left: -135px;
     width: 270px;
-    left: 20px;
+    margin: 0 auto;
     background-color: rgba(0,0,0,0.2);
     border-radius: 3px;
-    font: 20px Georgia;
+    font: 15px Georgia;
     padding: 10px;
+  }
+
+  #guider {
+    position: absolute;
+    
+    left: 50%;
+    bottom: 10%;
+    margin-left: -150px;
+    width: 300px;
+
+    font: 15px avenir;
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.2)
+    padding: 20px;
   }
 
   .year {
