@@ -464,14 +464,14 @@ DAT.Globe = function (container, opts) {
 
 
     if (enlarged <= 60) {
-      location.scale.x += 0.6;
-      location.scale.y += 0.6;
+      location.scale.x += 0.7;
+      location.scale.y += 0.7;
       enlarged += 10;
   
     } else {
       if (shrinked <= 60) {
-        location.scale.x -= 0.15;
-        location.scale.y -= 0.15;
+        location.scale.x -= 0.2;
+        location.scale.y -= 0.2;
         shrinked += 10;
       } else {
         effectExecuted = true;

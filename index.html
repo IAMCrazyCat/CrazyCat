@@ -40,7 +40,7 @@
 <body>
 
 
-  <audio autoplay="autoplay" src="/bgm/1.mp3" controls> </audio>
+
 
   <div id="container" style="display: none;"></div>
 
@@ -77,11 +77,11 @@
 
   </div>
 
-  
+
+  <audio id="audio" src="/bgm/1.mp3" controls> </audio>
 
   <script type="text/javascript">
 
-  
 
     const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))//Define a delay function
     var guiderTextArray = ["Hi, I am Ziming, your tourist guide, I will be introducing myself in this special way", "First, let me bring you to my hometown", "Are you ready? let's go!", "Here we are, this is ChangSha, a big city in south China", "Now try to click it"];
@@ -224,7 +224,7 @@
     var flashing = false;
 
     async function flash(str) {
- 
+
       while (flashing) { // Corsor flash 
         await sleep(500);
         document.getElementById("guiderText").innerHTML = str;
