@@ -302,7 +302,7 @@ DAT.Globe = function (container, opts) {
 
 
 
- 
+
 
   function onMouseDown(event) {
     event.preventDefault();
@@ -384,29 +384,52 @@ DAT.Globe = function (container, opts) {
     render();
   }
 
-   //-------------------------------------------------------------------------------------------------
-   var location;
+  //-------------------------------------------------------------------------------------------------
+  var location;
 
-   function addSpot(latitude, longtitude) {
-    
-     var spot = new THREE.Mesh(new THREE.CircleGeometry(1, 1000), new THREE.MeshBasicMaterial({ color: "white", wireframe: true }));
- 
-     var phi = (90 - latitude) * Math.PI / 180;
-     var theta = (180 - longtitude) * Math.PI / 180;
- 
- 
-     spot.position.x = 200 * Math.sin(phi) * Math.cos(theta);
-     spot.position.y = 200 * Math.cos(phi);
-     spot.position.z = 200 * Math.sin(phi) * Math.sin(theta);
- 
- 
-     spot.lookAt(mesh.position);
-     
-     scene.add(spot);
-     spot.cursor = 'pointer';
-     location = spot;
- 
-   }
+  function addSpot(latitude, longtitude) {
+
+    var spot = new THREE.Mesh(new THREE.CircleGeometry(1, 1000), new THREE.MeshBasicMaterial({ color: "blue", wireframe: true }));
+
+    var phi = (90 - latitude) * Math.PI / 180;
+    var theta = (180 - longtitude) * Math.PI / 180;
+
+
+    spot.position.x = 200 * Math.sin(phi) * Math.cos(theta);
+    spot.position.y = 200 * Math.cos(phi);
+    spot.position.z = 200 * Math.sin(phi) * Math.sin(theta);
+
+
+    spot.lookAt(mesh.position);
+
+    scene.add(spot);
+    spot.cursor = 'pointer';
+    location = spot;
+    toScreenPosition(spot, camera)
+
+  }
+
+  function toScreenPosition(obj, camera) {
+    var vector = new THREE.Vector3();
+
+    var widthHalf = 0.5 * renderer.context.canvas.width;
+    var heightHalf = 0.5 * renderer.context.canvas.height;
+
+    obj.updateMatrixWorld();
+    vector.setFromMatrixPosition(obj.matrixWorld);
+    vector.project(camera);
+
+    vector.x = (vector.x * widthHalf) + widthHalf;
+    vector.y = - (vector.y * heightHalf) + heightHalf;
+
+    alert(vector.x);
+    alert(vector.y);
+    return {
+      x: vector.x,
+      y: vector.y
+    };
+
+  };
 
   function render() {
     if (spin) {
@@ -425,7 +448,7 @@ DAT.Globe = function (container, opts) {
       // originRotx 1.88 roty 0.52
       // rotx 3.19 roty 0.04
       distance += (distanceTarget - distance) * zoomSpeed * 0.03;
-   
+
 
     }
     camera.position.x = distance * Math.sin(rotation.x) * Math.cos(rotation.y);
@@ -448,26 +471,23 @@ DAT.Globe = function (container, opts) {
   var effectExecuted = false;
 
   function update() {
-    console.log(distance);
+    //console.log(distance);
     if (distance < 950 && !spotAdded) {
       addSpot(28.12, 112.59);
-    
+
       spotAdded = true;
     }
 
   }
 
-  var x, y;
-  var originalDistance;
   var recorded = false;
   function elasticEffect() {
-
 
     if (enlarged <= 60) {
       location.scale.x += 0.7;
       location.scale.y += 0.7;
       enlarged += 10;
-  
+
     } else {
       if (shrinked <= 60) {
         location.scale.x -= 0.2;
@@ -475,16 +495,16 @@ DAT.Globe = function (container, opts) {
         shrinked += 10;
       } else {
         effectExecuted = true;
-        if (!recorded){
+        if (!recorded) {
           x = location.scale.x;
           y = location.scale.y;
           originalDistance = distance;
           recorded = true;
         }
-        
+
         //location.scale.x -= distance/originalDistance * x 
         //location.scale.y -= distance/originalDistance * y
-        
+
       }
     }
 
