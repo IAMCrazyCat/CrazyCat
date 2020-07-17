@@ -81,13 +81,10 @@ html {
 
   #guider {
     position: absolute;
-    
     left: 50%;
     bottom: 10%;
     margin-left: -130px;
-
     width: 300px;
-
     font: 15px avenir;
     color: rgb(255, 255, 255);
     background-color: rgba(0, 0, 0, 0.2)
@@ -112,6 +109,7 @@ html {
     color: #fff;
   }
 
+  
   #ce span {
     display: none;
   }
@@ -125,3 +123,89 @@ html {
     left: 20px;
     background: url(/globe/ce.png);
   }
+
+  #window {
+   
+    position: absolute; 
+    left: 0px; 
+    bottom: 0px; 
+    width: 335px;
+    background: url(/materials/detailsWindow.png); 
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    padding: 30px;
+    display: none;
+    animation: windowAnime 0.5s;
+  }
+
+  #spot{
+    position: absolute; 
+    left: 0px; 
+    top: 0px; 
+    width: 30px; 
+    animation: spotAnime 1s;
+    cursor: pointer;
+    
+
+  }
+
+  #title-window{
+      position: relative;
+      font: 30px avenir;
+      color: black;
+      top: -20px;
+
+    
+
+  }
+
+  #year-window{
+    position: relative;
+    font: 20px avenir;
+
+  }
+
+  #content-window{
+    position: relative;
+    top: 20px;
+    font: 16px avenir;
+    color: black;
+
+    
+  }
+
+  #spotImg{
+    position: absolute; 
+    left: 170px; 
+    top: 0px; 
+    width: 150px; 
+    border-radius: 50%;
+  }
+ 
+
+  @keyframes windowAnime
+  {
+    0%{
+    transform: scale(0);  /*开始为原始大小*/
+    }
+    50%{
+        transform: scale(1.1);
+    }
+    100%{
+        transform: scale(1);
+    }
+
+  }
+  @keyframes spotAnime{
+    0%{
+        transform: scale(0);  /*开始为原始大小*/
+        }
+        50%{
+            transform: scale(1.2);
+        }
+        100%{
+            transform: scale(1);
+        }
+
+  }
+

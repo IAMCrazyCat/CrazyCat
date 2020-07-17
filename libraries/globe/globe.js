@@ -389,8 +389,7 @@ DAT.Globe = function (container, opts) {
 
   function addSpot(latitude, longtitude) {
 
-    var spot = new THREE.Mesh(new THREE.CircleGeometry(1, 1000), new THREE.MeshBasicMaterial({ color: "blue", wireframe: true }));
-
+    var spot = new THREE.Mesh(new THREE.CircleGeometry(1, 100), new THREE.MeshBasicMaterial({ color: "blue", wireframe: true }));
     var phi = (90 - latitude) * Math.PI / 180;
     var theta = (180 - longtitude) * Math.PI / 180;
 
@@ -403,9 +402,12 @@ DAT.Globe = function (container, opts) {
     spot.lookAt(mesh.position);
 
     scene.add(spot);
-    spot.cursor = 'pointer';
+    //spot.cursor = 'pointer';
+    spot.visible = false;
     location = spot;
-    toScreenPosition(spot, camera)
+
+    toScreenPosition(spot, camera);
+  
 
   }
 
@@ -421,9 +423,7 @@ DAT.Globe = function (container, opts) {
 
     vector.x = (vector.x * widthHalf) + widthHalf;
     vector.y = - (vector.y * heightHalf) + heightHalf;
-
-    alert(vector.x);
-    alert(vector.y);
+   
     return {
       x: vector.x,
       y: vector.y
@@ -431,6 +431,7 @@ DAT.Globe = function (container, opts) {
 
   };
 
+  var rotationDeg = 1;
   function render() {
     if (spin) {
       rotation.x += rotationSpeed * 0.01
@@ -461,8 +462,15 @@ DAT.Globe = function (container, opts) {
     update();
 
     if (!effectExecuted) {
-      elasticEffect();
+      //elasticEffect();
     }
+    var adjustment = 30 / 2
+    document.getElementById("spot").style.left = String(toScreenPosition(location, camera).x - adjustment) + "px";
+    document.getElementById("spot").style.top = String(toScreenPosition(location, camera).y - adjustment) + "px";
+
+    document.getElementById("window").style.left = String(toScreenPosition(location, camera).x - adjustment - 183) + "px";
+    document.getElementById("window").style.bottom = String($(document).height() - toScreenPosition(location, camera).y + 10) + "px";
+    
   }
 
   var enlarged = 0;
@@ -473,9 +481,7 @@ DAT.Globe = function (container, opts) {
   function update() {
     //console.log(distance);
     if (distance < 950 && !spotAdded) {
-      addSpot(28.12, 112.59);
-
-      spotAdded = true;
+      $("#spot").show();
     }
 
   }
@@ -502,9 +508,6 @@ DAT.Globe = function (container, opts) {
           recorded = true;
         }
 
-        //location.scale.x -= distance/originalDistance * x 
-        //location.scale.y -= distance/originalDistance * y
-
       }
     }
 
@@ -519,7 +522,10 @@ DAT.Globe = function (container, opts) {
     target.x = 6.6;
     target.y = 0.53;
     distanceTarget = 900;
+    addSpot(28.12, 112.59)
+
   }
+
   this.updateEarthI = updateEarthI;
   init();
   this.animate = animate;

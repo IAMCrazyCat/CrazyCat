@@ -77,9 +77,19 @@
 
   </div>
 
-  <div id="detailsWindow" style="position: absolute; left: 392.36px; top: 499.22px;">
-    ChangSha
+  <div id="locationDetails" style="">
+    <div id="window">
+      <h1 id="title-window">Changsha</p>
+      <img id="spotImg"src="/spots/changsha.png">
+      <p id="year-window"> 1997-2015</p>
+      <p id="content-window">"The city I missed the most evernight when I was 10000 miles away "</p>
+      <button> Story </button>
+    </div>
+    <img id="spot" src="materials/spot2.png" style="display: none;" onmousemove="spotClickAction()">
+    
+    
   </div>
+
 
   <audio id="audio" src="/bgm/1.mp3" controls> </audio>
 
@@ -87,7 +97,7 @@
 
 
     const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))//Define a delay function
-    var guiderTextArray = ["Hi, I am Ziming, your tourist guide, I will be introducing myself in this special way", "First, let me bring you to my hometown", "Are you ready? let's go!", "Here we are, this is ChangSha, a big city in south China", "Now try to click it"];
+    var guiderTextArray = ["Hi, I am Ziming, your tourist guide, I will be introducing myself in this special way", "First, let me bring you to my hometown", "Are you ready? let's go!", "Here we are, this is ChangSha, a big city in south China", "Now try to click it", "Well done! Now let's start my story"];
 
 
     var vm = new Vue({
@@ -118,6 +128,8 @@
 
     $("#showCenterTitle").click();
 
+    var stopSpeed = 3;
+    var printSpeed = 0.5
     async function showGuiderText(counter) { // counter: index of text, time: times that cursor flahes after text printed
       $("#container").fadeIn(1000);
       $("#guiderText").show();
@@ -133,19 +145,26 @@
 
         str += letters[i];
         if (letters[i] == "," || letters[i] == "!" || letters[i] == "?") {
-          await sleep(500);
+          await sleep(stopSpeed * 100);
           document.getElementById("guiderText").innerHTML = str;
-          await sleep(500);
+          await sleep(stopSpeed * 100);
           document.getElementById("guiderText").innerHTML = str + "▮";
         }
         document.getElementById("guiderText").innerHTML = str + "▮";
-        await sleep(80);
+        await sleep(printSpeed * 100);
         i += 1
       }
 
       flashing = true;
       flash(str);
 
+    }
+
+    function spotClickAction(){
+      $("#window").fadeIn();
+      showGuiderText(5);
+      //document.getElementById("window").style.left = String($("#spot").offset().left - 190) + "px";
+      //document.getElementById("window").style.top = String($("#spot").offset().top - 240) + "px";
     }
 
   </script>
@@ -252,11 +271,18 @@
       await showGuiderText(1);
       await sleep(2000);
       await showGuiderText(2);
-      await globe.updateEarthI(0.7, 0.2);
+      await sleep(1000);
+      await test();
       await sleep(7000);
       await showGuiderText(3);
       await sleep(2000);
       await showGuiderText(4);
+
+    }
+
+    function test() {
+
+      globe.updateEarthI(0.7, 0.2);
 
     }
 
