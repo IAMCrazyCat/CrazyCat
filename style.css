@@ -135,6 +135,7 @@ html {
     background-repeat: no-repeat;
     padding: 30px;
     display: none;
+
     animation: windowAnime 0.5s;
   }
 
@@ -167,7 +168,7 @@ html {
 
   #content-window{
     position: relative;
-    top: 20px;
+    top: 40px;
     font: 16px avenir;
     color: black;
 
@@ -176,9 +177,9 @@ html {
 
   #spotImg{
     position: absolute; 
-    left: 170px; 
+    left: 190px; 
     top: 0px; 
-    width: 150px; 
+    width: 130px; 
     border-radius: 50%;
   }
  

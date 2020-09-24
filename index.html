@@ -81,11 +81,13 @@
     <div id="window">
       <h1 id="title-window">Changsha</p>
       <img id="spotImg"src="/spots/changsha.png">
-      <p id="year-window"> 1997-2015</p>
+      <p id="year-window"> 1997 - 2020</p>
+     
       <p id="content-window">"The city I missed the most evernight when I was 10000 miles away "</p>
-      <button> Story </button>
+      <br>
+      
     </div>
-    <img id="spot" src="materials/spot2.png" style="display: none;" onmousemove="spotClickAction()">
+    <img id="spot" src="materials/spot2.png" style="display: none;" onclick="spotClickAction(this)" >
     
     
   </div>
@@ -118,7 +120,7 @@
         afterEnter() {
           this.show = false;
           addEarth();
-          startStories();
+          updateEarthI();
 
 
         }
@@ -160,11 +162,11 @@
 
     }
 
-    function spotClickAction(){
-      $("#window").fadeIn();
-      showGuiderText(5);
-      //document.getElementById("window").style.left = String($("#spot").offset().left - 190) + "px";
-      //document.getElementById("window").style.top = String($("#spot").offset().top - 240) + "px";
+    function spotClickAction(spot){
+      $("#window").show();
+      globe.moveToCenter(spot);
+      updateEarthII();
+     
     }
 
   </script>
@@ -272,7 +274,7 @@
       await sleep(2000);
       await showGuiderText(2);
       await sleep(1000);
-      await test();
+      await globe.updateEarth(1, 0.7, 0.2);
       await sleep(7000);
       await showGuiderText(3);
       await sleep(2000);
@@ -280,15 +282,17 @@
 
     }
 
-    function test() {
 
-      globe.updateEarthI(0.7, 0.2);
-
-    }
 
     async function updateEarthII() {
+     
+      await sleep(1000);
+      await showGuiderText(5);
+      await globe.updateEarth(2, 1, 1);
+
 
     }
+
 
     async function updateEarthIII() {
 

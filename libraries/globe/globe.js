@@ -405,9 +405,9 @@ DAT.Globe = function (container, opts) {
     //spot.cursor = 'pointer';
     spot.visible = false;
     location = spot;
-
     toScreenPosition(spot, camera);
-  
+    spotAdded = true;
+
 
   }
 
@@ -423,7 +423,7 @@ DAT.Globe = function (container, opts) {
 
     vector.x = (vector.x * widthHalf) + widthHalf;
     vector.y = - (vector.y * heightHalf) + heightHalf;
-   
+
     return {
       x: vector.x,
       y: vector.y
@@ -461,32 +461,39 @@ DAT.Globe = function (container, opts) {
 
     update();
 
-    if (!effectExecuted) {
-      //elasticEffect();
-    }
-    var adjustment = 30 / 2
-    document.getElementById("spot").style.left = String(toScreenPosition(location, camera).x - adjustment) + "px";
-    document.getElementById("spot").style.top = String(toScreenPosition(location, camera).y - adjustment) + "px";
 
-    document.getElementById("window").style.left = String(toScreenPosition(location, camera).x - adjustment - 183) + "px";
-    document.getElementById("window").style.bottom = String($(document).height() - toScreenPosition(location, camera).y + 10) + "px";
-    
+
+
   }
 
   var enlarged = 0;
   var shrinked = 0;
   var spotAdded = false;
-  var effectExecuted = false;
+
 
   function update() {
-    //console.log(distance);
-    if (distance < 950 && !spotAdded) {
+    if (spotAdded) {
+      var adjustment = 30 / 2
+      document.getElementById("spot").style.left = String(toScreenPosition(location, camera).x - adjustment) + "px";
+      document.getElementById("spot").style.top = String(toScreenPosition(location, camera).y - adjustment) + "px";
+
+      document.getElementById("window").style.left = String(toScreenPosition(location, camera).x - adjustment - 183) + "px";
+      document.getElementById("window").style.bottom = String($(document).height() - toScreenPosition(location, camera).y + 10) + "px";
+    }
+    if (distance < 950) {
+
       $("#spot").show();
+
+
+    }
+    if (distance < 500) {
+      //$("#container").fadeOut();
     }
 
   }
 
   var recorded = false;
+
   function elasticEffect() {
 
     if (enlarged <= 60) {
@@ -516,17 +523,53 @@ DAT.Globe = function (container, opts) {
 
 
 
-  function updateEarthI(rs, zs) {
+  function updateEarth(num, rs, zs) {
+
     zoomSpeed = zs;
     rotationSpeed = rs;
-    target.x = 6.6;
-    target.y = 0.53;
-    distanceTarget = 900;
-    addSpot(28.12, 112.59)
+    switch (num) {
+      case 1:
+
+        target.x = 6.5;
+        target.y = 0.53;
+        distanceTarget = 900;
+        addSpot(28.12, 112.59);
+        break;
+      case 2:
+
+        //distanceTarget = 100;
+        break;
+
+    }
 
   }
 
-  this.updateEarthI = updateEarthI;
+  function moveToCenter(spot) {
+    //alert("yes");
+    
+    var screenCenterX = $(window).width() / 2;
+    var screenCenterY = $(window).height() / 2;
+
+    var spotCurrentX = spot.offsetLeft;
+    var spotCurrentY = spot.offsetTop;
+    //console.log(screenCenterX);
+    //console.log(spotCurrentX );
+    var rotationX = (spotCurrentX - screenCenterX) ;
+    var rotationY = (spotCurrentY - screenCenterY) ;
+
+    rotation.x += 0.1
+    rotation.y += 0.1
+    //rotationSpeed = 2;
+    //target.x += rotationX;
+    //target.y += rotationY;
+
+    console.log(spotCurrentX);
+    console.log(spotCurrentY);
+  }
+
+
+  this.moveToCenter = moveToCenter;
+  this.updateEarth = updateEarth;
   init();
   this.animate = animate;
 
