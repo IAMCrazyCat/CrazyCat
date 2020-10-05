@@ -121,7 +121,7 @@ html {
     position: absolute;
     bottom: 15px;
     left: 20px;
-    background: url(/globe/ce.png);
+    background: url(globe/ce.png);
   }
 
   #window {
@@ -130,7 +130,7 @@ html {
     left: 0px; 
     bottom: 0px; 
     width: 335px;
-    background: url(/materials/detailsWindow.png); 
+    background: url(materials/detailsWindow.png); 
     background-size: 100% 100%;
     background-repeat: no-repeat;
     padding: 30px;
