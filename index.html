@@ -4,311 +4,43 @@
 <head>
   <meta charset="utf-8">
   <title>CrazyCat</title>
-
-  <script src="libraries/vue/vue.js"></script>
-  <link rel="stylesheet" href="style.css" type="text/css" />
-
-  <script src="libraries/three/three.js"></script>
-  <script src="libraries/three/three.min.js"></script>
-  <script type="module" src="libraries/three/three.module.js"></script>
-  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-  <script src="libraries/three/LoadingManager.js"></script>
-  <script type="module" src="libraries/three/MTLLoader.js"></script>
-  <script type="module" src="libraries/three/OBJLoader.js"></script>
-  <script src="libraries/three/dat.gui.js"></script>
-  <script src="libraries/three/dat.gui.min.js"></script>
-
-  <script type="module" src="libraries/three/OrbitControls.js"></script>
-  <script type="module" src="libraries/three/TransformControls.js"></script>
-
-  <script type="module" src="transformtest.js"></script>
-
+  <link rel="stylesheet" href="navigation.css" type="text/css" />
   <style>
-    .fade-enter-active,
-    .fade-leave-active {
-      transition: opacity 3s
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000000;
+      color: #ffffff;
+      font-family: sans-serif;
+      font-size: 13px;
+      line-height: 20px;
+      height: 100%;
     }
 
-    .fade-enter,
-    .fade-leave-to {
-      opacity: 0
+    .content {
+      margin: -10px;
     }
   </style>
 
 </head>
 
 <body>
-
-
-
-
-  <div id="container" style="display: none;"></div>
-
-  <div id="info">
-
-  </div>
-
-  <div id="centerTitle">
-    <button ID="showCenterTitle" @click="change" style="display: none;"></button>
-    <transition name="fade" v-on:before-enter="beforeEnter" v-on:after-enter="afterEnter">
-      <p id="centerTitleText" v-show="show">Hello.</p>
-    </transition>
-
-
-
-  </div>
-
-  <div id="guider">
-
-    <p id="guiderText" style="display:none"></p>
-  </div>
-
-
-
-  <div id="year">
-
-    <div id="currentInfo">
-      <span id="I" class="year">I</span>
-      <span id="II" class="year">II</span>
-      <span id="III" class="year">III</span>
-      <span id="IV" class="year">IV</span>
-      <span id="V" class="year">V</span>
+  <div class="menu">
+    <div class="topnav">
+      <a class="active" href="#home">Home</a>
+      <a href="animation.html">Animation</a>
+      <a href="#video">Video</a>
+      <a href="#contact">Photo</a>
+      <a href="explore.html">Explore</a>
+      <a href="#about">About me</a>
     </div>
-
   </div>
 
-  <div id="locationDetails" style="">
-    <div id="window">
-      <h1 id="title-window">Changsha</p>
-      <img id="spotImg"src="spots/changsha.png">
-      <p id="year-window"> 1997 - 2020</p>
-     
-      <p id="content-window">"The city I missed the most evernight when I was 10000 miles away "</p>
-      <br>
-      
-    </div>
-    <img id="spot" src="materials/spot2.png" style="display: none;" onclick="spotClickAction(this)" >
-    
-    
+  <div class="content">
+    <img style="width: 100%; height: 100%;" src="images/astronaut1.png">
+    <img style="width: 100%; height: 100%;" src="images/astronaut1.gif">
   </div>
 
-
-  <audio id="audio" src="bgm/1.mp3" controls> </audio>
-
-  <script type="text/javascript">
-
-
-    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))//Define a delay function
-    var guiderTextArray = ["Hi, I am Ziming, your tourist guide, I will be introducing myself in this special way", "First, let me bring you to my hometown", "Are you ready? let's go!", "Here we are, this is ChangSha, a big city in south China", "Now try to click it", "Well done! Now let's start my story"];
-
-
-    var vm = new Vue({
-      el: '#centerTitle',
-      data: {
-        show: false,
-        text: "text"
-      },
-      methods: {
-        change() {
-          this.show = !this.show
-        },
-        beforeEnter() {
-
-
-
-        },
-        afterEnter() {
-          this.show = false;
-          addEarth();
-          updateEarthI();
-
-
-        }
-
-      }
-    });
-
-    $("#showCenterTitle").click();
-
-    var stopSpeed = 3;
-    var printSpeed = 0.5
-    async function showGuiderText(counter) { // counter: index of text, time: times that cursor flahes after text printed
-      $("#container").fadeIn(1000);
-      $("#guiderText").show();
-      var str = "";
-
-      var text = guiderTextArray[counter];
-      var letters = text.split("");
-      var i = 0;
-
-      flashing = false;
-
-      while (i < letters.length) {
-
-        str += letters[i];
-        if (letters[i] == "," || letters[i] == "!" || letters[i] == "?") {
-          await sleep(stopSpeed * 100);
-          document.getElementById("guiderText").innerHTML = str;
-          await sleep(stopSpeed * 100);
-          document.getElementById("guiderText").innerHTML = str + "▮";
-        }
-        document.getElementById("guiderText").innerHTML = str + "▮";
-        await sleep(printSpeed * 100);
-        i += 1
-      }
-
-      flashing = true;
-      flash(str);
-
-    }
-
-    function spotClickAction(spot){
-      $("#window").show();
-      globe.moveToCenter(spot);
-      updateEarthII();
-     
-    }
-
-  </script>
-
-
-
-
-
-
-  <script type="text/javascript" src="libraries/others/Detector.js"></script>
-  <script type="text/javascript" src="libraries/three/three.min.js"></script>
-  <script type="text/javascript" src="libraries/others/Tween.js"></script>
-  <script type="text/javascript" src="libraries/globe/globe.js"></script>
-
-
-
-
-  <script type="text/javascript">
-    document.body.style.backgroundImage = 'none';
-
-    var globe;
-    function addEarth() {
-      if (!Detector.webgl) {
-        Detector.addGetWebGLMessage();
-      } else {
-
-        var years = ['I', 'II', 'III', 'IV', 'V'];
-        var container = document.getElementById('container');
-        globe = new DAT.Globe(container);
-
-        console.log(globe);
-        var i, tweens = [];
-
-        var settime = function (globe, t) {
-          return function () {
-            new TWEEN.Tween(globe).to({ time: t / years.length }, 500).easing(TWEEN.Easing.Cubic.EaseOut).start();
-            var y = document.getElementById('' + years[t]);
-            if (y.getAttribute('class') === 'year active') {
-              return;
-            }
-            var yy = document.getElementsByClassName('year');
-            for (i = 0; i < yy.length; i++) {
-              yy[i].setAttribute('class', 'year');
-            }
-            y.setAttribute('class', 'year active');
-          };
-        };
-
-        for (var i = 0; i < years.length; i++) {
-          var y = document.getElementById('' + years[i]);
-          y.addEventListener('mouseover', settime(globe, i), false);
-        }
-
-        var xhr;
-        TWEEN.start();
-
-
-        xhr = new XMLHttpRequest();
-        xhr.open('GET', 'population909500.json', true);
-        xhr.onreadystatechange = function (e) {
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-              var data = JSON.parse(xhr.responseText);
-              window.data = data;
-              for (i = 0; i < data.length; i++) {
-                globe.addData(data[i][1], { format: 'magnitude', name: data[i][0], animated: true });
-              }
-              globe.createPoints();
-              settime(globe, 0)();
-              globe.animate();
-              document.body.style.backgroundImage = 'none'; // remove loading
-            }
-          }
-        };
-        xhr.send(null);
-      }
-
-    }
-    var flashing = false;
-
-    async function flash(str) {
-
-      while (flashing) { // Corsor flash 
-        await sleep(500);
-        document.getElementById("guiderText").innerHTML = str;
-        await sleep(500);
-        document.getElementById("guiderText").innerHTML = str + "▮";
-      }
-    }
-
-    async function startStories() {
-
-      await updateEarthI();
-      await updateEarthII();
-      await updateEarthIII();
-      await updateEarthIV();
-      await updateEarthV();
-    }
-
-    async function updateEarthI() {
-
-      await showGuiderText(0);
-      await sleep(3000);
-      await showGuiderText(1);
-      await sleep(2000);
-      await showGuiderText(2);
-      await sleep(1000);
-      await globe.updateEarth(1, 0.7, 0.2);
-      await sleep(7000);
-      await showGuiderText(3);
-      await sleep(2000);
-      await showGuiderText(4);
-
-    }
-
-
-
-    async function updateEarthII() {
-     
-      await sleep(1000);
-      await showGuiderText(5);
-      await globe.updateEarth(2, 1, 1);
-
-
-    }
-
-
-    async function updateEarthIII() {
-
-    }
-
-    async function updateEarthIV() {
-
-    }
-
-    async function updateEarthV() {
-
-    }
-
-
-
-  </script>
 </body>
 
 </html>

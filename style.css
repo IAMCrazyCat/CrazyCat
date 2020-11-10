@@ -11,9 +11,10 @@ html {
     line-height: 20px;
     height: 100%;
   }
+  
+  
 
   #info {
-
     font-size: 11px;
     position: relative;
     bottom: 5px;
