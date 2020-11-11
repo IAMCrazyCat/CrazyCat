@@ -5,6 +5,7 @@
   right: 0px;
   top: 0px;
   border: 1px solid black;
+  z-index: 3; 
 
 }
 
