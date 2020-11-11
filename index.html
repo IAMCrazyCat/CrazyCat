@@ -20,6 +20,27 @@
     .content {
       margin: -10px;
     }
+
+
+    .videoDiv{
+      position: relative;
+      top: 100px;
+      
+    }
+
+    .videoText{
+      position: absolute; 
+      border: solid 2px white ;
+      border-radius: 50px;
+      padding: 20px;
+      font-size: 20px;
+      z-index: 2; 
+      left: 50%;
+      margin-left: -100px;
+      bottom: 100px;
+      cursor: pointer;
+    }
+    
   </style>
 
 </head>
@@ -37,8 +58,16 @@
   </div>
 
   <div class="content">
-    <img style="width: 100%; height: 100%;" src="images/astronaut1.png">
-    <img style="width: 100%; height: 100%;" src="images/astronaut1.gif">
+     .videoDiv{
+      position: relative;
+      top:130px;
+    }
+    <div class="videoDiv">
+    <video style="width:100%" src="/videos/Astronaut_cropped.mp4" autoplay="autoplay" ></video>
+    <div class="videoText" ><a style="color: white;"href="animation.html">Watch Video</a> </div>
+    </div>
+   
+  
   </div>
 
 </body>
