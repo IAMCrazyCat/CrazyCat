@@ -43,11 +43,12 @@
   </div>
 
   <div class="menu">
+    
     <div class="topnav">
       <a href="index.html">Home</a>
-      <a href="#news">Animation</a>
-      <a href="#viedeo">Video</a>
-      <a href="#contact">Photo</a>
+      <a href="animation.html">Animation</a>
+      <a href="video.html">Video</a>
+      <a href="photo.html">Photo</a>
       <a class="active" href="explore.html">Explore</a>
       <a href="#about">About me</a>
     </div>
@@ -57,7 +58,8 @@
   <div id="centerTitle">
     <button ID="showCenterTitle" @click="change" style="display: none;"></button>
     <transition name="fade" v-on:before-enter="beforeEnter" v-on:after-enter="afterEnter">
-      <p id="centerTitleText" v-show="show">Explore</p>
+      <p id="centerTitleText" v-show="show">Hello</p>
+
     </transition>
 
 
@@ -87,7 +89,7 @@
     <div id="window">
       <h1 id="title-window">Changsha</p>
       <img id="spotImg"src="spots/changsha.png">
-      <p id="year-window"> 1997 - 2020</p>
+      <p id="year-window"> B.C 206 - Now </p>
      
       <p id="content-window">"The city I missed the most evernight when I was 10000 miles away "</p>
       <br>
